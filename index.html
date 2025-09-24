@@ -238,6 +238,45 @@
             text-align: center;
         }
 
+        .tkbell-section {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            color: white;
+            text-align: center;
+        }
+
+        .tkbell-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .tkbell-btn {
+            display: block;
+            text-decoration: none;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+        }
+
+        .tkbell-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .tkbell-1 { background: linear-gradient(135deg, #ff7675, #fd79a8); }
+        .tkbell-2 { background: linear-gradient(135deg, #74b9ff, #0984e3); }
+        .tkbell-3 { background: linear-gradient(135deg, #00b894, #00cec9); }
+        .tkbell-4 { background: linear-gradient(135deg, #fdcb6e, #e17055); }
+        .tkbell-5 { background: linear-gradient(135deg, #a29bfe, #6c5ce7); }
+        .tkbell-6 { background: linear-gradient(135deg, #fd79a8, #fdcb6e); }
+
         @media (max-width: 768px) {
             .container {
                 margin: 10px;
@@ -418,40 +457,49 @@
                 </div>
             </div>
 
+            <!-- 저장 버튼들 -->
+            <div style="text-align: center; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                <button class="save-btn" onclick="saveAsHTML()">📄 HTML 보고서</button>
+                <button class="save-btn" onclick="showResultSummary()" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">📋 결과 정리하기</button>
+            </div>
+
+            <!-- 띵커벨 제출 섹션 -->
+            <div class="tkbell-section">
+                <h3>🔔 띵커벨 바로 제출하기</h3>
+                <p style="margin-bottom: 15px; font-size: 14px;">
+                    💡 <strong>제출 방법:</strong> "결과 정리하기" → 화면 캡처 → 아래 본인 반 링크 클릭 → 이미지 업로드
+                </p>
+                <div class="tkbell-grid">
+                    <a href="https://b.tkbell.co.kr/tkboard/woi/1243615/070Te5fM12.do?pageSeq=1909631" target="_blank" class="tkbell-btn tkbell-1">
+                        📚 3-1반 제출하기
+                    </a>
+                    <a href="https://b.tkbell.co.kr/tkboard/woi/1243615/73eP88436t.do?pageSeq=1909634" target="_blank" class="tkbell-btn tkbell-2">
+                        📚 3-2반 제출하기
+                    </a>
+                    <a href="https://b.tkbell.co.kr/tkboard/woi/1243615/0kbNx8eK3a.do?pageSeq=1909636" target="_blank" class="tkbell-btn tkbell-3">
+                        📚 3-3반 제출하기
+                    </a>
+                    <a href="https://b.tkbell.co.kr/tkboard/woi/1243615/1z6bIL2c47.do?pageSeq=1909635" target="_blank" class="tkbell-btn tkbell-4">
+                        📚 3-4반 제출하기
+                    </a>
+                    <a href="https://b.tkbell.co.kr/tkboard/woi/1243615/G2GsHEERbV.do?pageSeq=1909637" target="_blank" class="tkbell-btn tkbell-5">
+                        📚 3-5반 제출하기
+                    </a>
+                    <a href="https://b.tkbell.co.kr/tkboard/woi/1243615/6meBlp16an.do?pageSeq=1909638" target="_blank" class="tkbell-btn tkbell-6">
+                        📚 3-6반 제출하기
+                    </a>
+                </div>
+                <p style="margin-top: 15px; font-size: 12px; text-align: center;">
+                    ⚠️ 새 창이 열리면 "사진 추가" 또는 "파일 첨부" 버튼을 찾아 캡처한 이미지를 업로드하세요!
+                </p>
+            </div>
+
             <!-- 측정 원리 다이어그램 -->
             <div class="measurement-diagram">
                 <h3>📐 클리노미터를 이용한 높이 측정 원리</h3>
                 <p><strong>높이 = (거리 × tan(각도)) + 관찰자 눈높이</strong></p>
                 <p style="margin-top: 10px; color: #666;">
                     삼각함수를 이용하여 건물이나 나무의 높이를 간접적으로 측정할 수 있습니다.
-                </p>
-            </div>
-
-            <div style="text-align: center; flex-wrap: wrap; display: flex; justify-content: center; gap: 10px;">
-                <button class="save-btn" onclick="saveAsHTML()">📄 HTML 보고서</button>
-                <button class="save-btn" onclick="showResultSummary()" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">📋 결과 정리하기</button>
-                <button class="save-btn" onclick="saveAsCSV()" style="background: linear-gradient(135deg, #00cec9, #55a3ff);">📊 CSV 데이터</button>
-                <button class="save-btn" onclick="submitToGoogleForm()" style="background: linear-gradient(135deg, #4285f4, #ea4335);">📝 구글폼 제출</button>
-            </div>
-
-            <!-- 구글폼 설정 섹션 -->
-            <div class="input-section" style="margin-top: 20px;">
-                <h3>📝 구글폼 제출 설정</h3>
-                <div class="form-group">
-                    <label>구글폼 URL:</label>
-                    <input type="url" id="googleFormUrl" placeholder="구글폼 URL을 입력하세요 (예: https://forms.gle/xxxxx)">
-                    <small style="display: block; margin-top: 5px; color: #ddd;">
-                        선생님이 만든 구글폼의 링크를 여기에 입력하세요.
-                    </small>
-                </div>
-                <button onclick="showGoogleFormGuide()" style="background: #6c5ce7; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-bottom: 10px;">
-                    📋 구글폼 설정 가이드 보기
-                </button>
-                <p style="color: #ddd; font-size: 14px; margin-top: 10px;">
-                    💡 <strong>구글폼 제출 방식:</strong><br>
-                    학생이 버튼을 누르면 구글폼이 새 창으로 열리고,<br>
-                    측정 데이터가 자동으로 미리 입력된 상태로 나타납니다!<br>
-                    사진은 구글폼의 파일 업로드 기능을 사용합니다.
                 </p>
             </div>
         </div>
@@ -701,246 +749,6 @@
             });
         }
 
-        // CSV 파일로 저장 (엑셀에서 열기 가능)
-        function saveAsCSV() {
-            const data = {
-                teamName: document.getElementById('teamName').value || '미입력',
-                target1: document.getElementById('target1').value || '미입력',
-                angle1: document.getElementById('angle1').value || '미입력',
-                distance1: document.getElementById('distance1').value || '미입력',
-                eyeHeight1: document.getElementById('eyeHeight1').value || '미입력',
-                calculatedHeight1: document.getElementById('calculatedHeight1').value || '미입력',
-                target2: document.getElementById('target2').value || '미입력',
-                angle2: document.getElementById('angle2').value || '미입력',
-                distance2: document.getElementById('distance2').value || '미입력',
-                eyeHeight2: document.getElementById('eyeHeight2').value || '미입력',
-                calculatedHeight2: document.getElementById('calculatedHeight2').value || '미입력',
-                reflection: document.getElementById('reflection').value || '미입력',
-                photoCount: uploadedFiles.length,
-                timestamp: new Date().toLocaleString()
-            };
-
-            const headers = [
-                '제출일시', '모둠명', 
-                '측정대상1', '각도1(도)', '거리1(m)', '눈높이1(m)', '계산높이1(m)',
-                '측정대상2', '각도2(도)', '거리2(m)', '눈높이2(m)', '계산높이2(m)',
-                '활동소감', '사진개수'
-            ];
-
-            const rowData = [
-                data.timestamp, data.teamName,
-                data.target1, data.angle1, data.distance1, data.eyeHeight1, data.calculatedHeight1,
-                data.target2, data.angle2, data.distance2, data.eyeHeight2, data.calculatedHeight2,
-                data.reflection, data.photoCount
-            ];
-
-            const csvContent = [
-                headers.join(','),
-                rowData.map(cell => `"${cell}"`).join(',')
-            ].join('\n');
-
-            // UTF-8 BOM 추가 (한글 깨짐 방지)
-            const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `클리노미터_데이터_${data.teamName}_${new Date().getTime()}.csv`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
-            alert('📊 CSV 파일이 저장되었습니다!\n\n엑셀에서 열어서 확인할 수 있어요!');
-        }
-
-        // 구글폼으로 제출하기
-        function submitToGoogleForm() {
-            const googleFormUrl = document.getElementById('googleFormUrl').value;
-            
-            if (!googleFormUrl) {
-                alert('구글폼 URL을 먼저 입력해주세요.');
-                return;
-            }
-
-            const data = {
-                teamName: document.getElementById('teamName').value || '',
-                target1: document.getElementById('target1').value || '',
-                angle1: document.getElementById('angle1').value || '',
-                distance1: document.getElementById('distance1').value || '',
-                eyeHeight1: document.getElementById('eyeHeight1').value || '',
-                calculatedHeight1: document.getElementById('calculatedHeight1').value || '',
-                target2: document.getElementById('target2').value || '',
-                angle2: document.getElementById('angle2').value || '',
-                distance2: document.getElementById('distance2').value || '',
-                eyeHeight2: document.getElementById('eyeHeight2').value || '',
-                calculatedHeight2: document.getElementById('calculatedHeight2').value || '',
-                reflection: document.getElementById('reflection').value || '',
-                timestamp: new Date().toLocaleString()
-            };
-
-            // 구글폼 URL에 데이터를 미리 입력하는 파라미터 추가
-            // 실제로는 구글폼의 entry ID를 알아야 하지만, 일단 기본 형태로 만들어보겠습니다
-            let formUrlWithData = googleFormUrl;
-            
-            // 구글폼이 /viewform으로 끝나면 미리채우기 URL로 변경
-            if (formUrlWithData.includes('/viewform')) {
-                formUrlWithData = formUrlWithData.replace('/viewform', '/viewform?usp=pp_url');
-                
-                // 미리채우기 파라미터들 (실제로는 폼의 entry ID가 필요함)
-                const prefillData = [
-                    `entry.모둠명=${encodeURIComponent(data.teamName)}`,
-                    `entry.측정대상1=${encodeURIComponent(data.target1)}`,
-                    `entry.각도1=${encodeURIComponent(data.angle1)}`,
-                    `entry.거리1=${encodeURIComponent(data.distance1)}`,
-                    `entry.눈높이1=${encodeURIComponent(data.eyeHeight1)}`,
-                    `entry.계산높이1=${encodeURIComponent(data.calculatedHeight1)}`,
-                    `entry.측정대상2=${encodeURIComponent(data.target2)}`,
-                    `entry.각도2=${encodeURIComponent(data.angle2)}`,
-                    `entry.거리2=${encodeURIComponent(data.distance2)}`,
-                    `entry.눈높이2=${encodeURIComponent(data.eyeHeight2)}`,
-                    `entry.계산높이2=${encodeURIComponent(data.calculatedHeight2)}`,
-                    `entry.활동소감=${encodeURIComponent(data.reflection)}`
-                ].join('&');
-                
-                // 실제로는 위 방법보다는 단순하게 폼을 열어주는 것이 더 실용적
-                formUrlWithData = googleFormUrl;
-            }
-
-            // 데이터 요약을 클립보드에 복사
-            const summaryText = `
-클리노미터 활동 결과 - ${data.teamName}
-
-[1차 측정]
-측정대상: ${data.target1}
-각도: ${data.angle1}°
-거리: ${data.distance1}m
-눈높이: ${data.eyeHeight1}m
-계산높이: ${data.calculatedHeight1}m
-
-[2차 측정]
-측정대상: ${data.target2}
-각도: ${data.angle2}°
-거리: ${data.distance2}m
-눈높이: ${data.eyeHeight2}m
-계산높이: ${data.calculatedHeight2}m
-
-[활동소감]
-${data.reflection}
-
-제출시간: ${data.timestamp}
-            `.trim();
-
-            // 클립보드에 복사
-            navigator.clipboard.writeText(summaryText).then(() => {
-                alert('📋 측정 데이터가 클립보드에 복사되었습니다!\n\n구글폼이 새 창으로 열립니다.\n붙여넣기(Ctrl+V)로 데이터를 입력하세요!');
-                
-                // 구글폼을 새 창으로 열기
-                window.open(formUrlWithData, '_blank');
-            }).catch(() => {
-                // 클립보드 복사가 실패하면 텍스트 영역에 표시
-                showDataForCopy(summaryText, formUrlWithData);
-            });
-        }
-
-        // 데이터를 복사할 수 있는 팝업 표시
-        function showDataForCopy(summaryText, formUrl) {
-            const popup = document.createElement('div');
-            popup.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0,0,0,0.8);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                z-index: 1000;
-            `;
-            
-            popup.innerHTML = `
-                <div style="
-                    background: white;
-                    padding: 30px;
-                    border-radius: 15px;
-                    max-width: 500px;
-                    width: 90%;
-                    max-height: 80%;
-                    overflow-y: auto;
-                ">
-                    <h3 style="margin-bottom: 20px;">📋 구글폼에 입력할 데이터</h3>
-                    <textarea 
-                        readonly 
-                        style="
-                            width: 100%;
-                            height: 300px;
-                            padding: 10px;
-                            border: 1px solid #ddd;
-                            border-radius: 5px;
-                            font-size: 12px;
-                            line-height: 1.4;
-                        "
-                        onclick="this.select()"
-                    >${summaryText}</textarea>
-                    <div style="margin-top: 20px; text-align: center;">
-                        <button onclick="copyToClipboard('${summaryText.replace(/'/g, "\\'")}'); window.open('${formUrl}', '_blank');" 
-                                style="background: #4285f4; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-right: 10px; cursor: pointer;">
-                            📝 복사하고 구글폼 열기
-                        </button>
-                        <button onclick="document.body.removeChild(this.parentElement.parentElement.parentElement)" 
-                                style="background: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
-                            닫기
-                        </button>
-                    </div>
-                    <p style="font-size: 12px; color: #666; margin-top: 15px;">
-                        💡 텍스트 영역을 클릭하면 전체 선택됩니다.<br>
-                        Ctrl+C로 복사한 후 구글폼에 붙여넣기하세요!
-                    </p>
-                </div>
-            `;
-            
-            document.body.appendChild(popup);
-        }
-
-        // 구글폼 설정 가이드
-        function showGoogleFormGuide() {
-            const guide = `
-📝 구글폼 설정 가이드 (선생님용)
-
-1️⃣ 구글폼 만들기
-• forms.google.com 접속
-• 새 설문지 만들기
-
-2️⃣ 필수 질문 항목들
-• 모둠명 (단답형)
-• 측정대상1 (단답형)
-• 각도1 (단답형)
-• 거리1 (단답형) 
-• 눈높이1 (단답형)
-• 계산높이1 (단답형)
-• 측정대상2 (단답형)
-• 각도2 (단답형)
-• 거리2 (단답형)
-• 눈높이2 (단답형)
-• 계산높이2 (단답형)
-• 활동소감 (장문형)
-• 활동사진 (파일 업로드)
-
-3️⃣ 설정
-• '응답 수집' 켜기
-• 공유 설정: 링크가 있는 모든 사용자
-
-4️⃣ 링크 복사
-• 우측 상단 '보내기' → 링크 복사
-• 위 입력란에 붙여넣기
-
-💡 팁: 학생이 버튼을 누르면 측정 데이터가 
-클립보드에 복사되어 폼에 쉽게 붙여넣을 수 있어요!
-            `;
-            
-            alert(guide);
-        }
-
         // 결과 정리하기 (현재 페이지에서 바로 보여주기)
         async function showResultSummary() {
             const data = {
@@ -988,10 +796,38 @@ ${data.reflection}
                     font-family: 'Malgun Gothic', sans-serif;
                 ">
                     <div style="text-align: center; margin-bottom: 20px;">
-                        <button onclick="location.reload()" style="background: #ff6b6b; color: white; border: none; padding: 10px 20px; border-radius: 25px; cursor: pointer; font-size: 14px; font-weight: bold; margin-bottom: 15px;">
+                        <button onclick="location.reload()" style="background: #ff6b6b; color: white; border: none; padding: 12px 25px; border-radius: 25px; cursor: pointer; font-size: 16px; font-weight: bold; margin-bottom: 15px; box-shadow: 0 3px 10px rgba(255,107,107,0.4);">
                             🔄 원래 화면으로 돌아가기
                         </button>
-                        <p style="margin: 0; color: #636e72; font-size: 14px;">📱 이 화면을 캡처해서 띵커벨에 업로드하세요!</p>
+                        <p style="margin: 10px 0; color: #636e72; font-size: 16px; font-weight: bold;">📱 이 화면을 캡처한 후 아래 본인 반 링크를 클릭해서 업로드하세요!</p>
+                        
+                        <!-- 띵커벨 제출 링크들 -->
+                        <div style="display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 15px;">
+                            <a href="https://b.tkbell.co.kr/tkboard/woi/1243615/070Te5fM12.do?pageSeq=1909631" target="_blank" 
+                               style="background: #ff7675; color: white; text-decoration: none; padding: 8px 12px; border-radius: 15px; font-size: 12px; font-weight: bold;">
+                                3-1반
+                            </a>
+                            <a href="https://b.tkbell.co.kr/tkboard/woi/1243615/73eP88436t.do?pageSeq=1909634" target="_blank" 
+                               style="background: #74b9ff; color: white; text-decoration: none; padding: 8px 12px; border-radius: 15px; font-size: 12px; font-weight: bold;">
+                                3-2반
+                            </a>
+                            <a href="https://b.tkbell.co.kr/tkboard/woi/1243615/0kbNx8eK3a.do?pageSeq=1909636" target="_blank" 
+                               style="background: #00b894; color: white; text-decoration: none; padding: 8px 12px; border-radius: 15px; font-size: 12px; font-weight: bold;">
+                                3-3반
+                            </a>
+                            <a href="https://b.tkbell.co.kr/tkboard/woi/1243615/1z6bIL2c47.do?pageSeq=1909635" target="_blank" 
+                               style="background: #fdcb6e; color: white; text-decoration: none; padding: 8px 12px; border-radius: 15px; font-size: 12px; font-weight: bold;">
+                                3-4반
+                            </a>
+                            <a href="https://b.tkbell.co.kr/tkboard/woi/1243615/G2GsHEERbV.do?pageSeq=1909637" target="_blank" 
+                               style="background: #a29bfe; color: white; text-decoration: none; padding: 8px 12px; border-radius: 15px; font-size: 12px; font-weight: bold;">
+                                3-5반
+                            </a>
+                            <a href="https://b.tkbell.co.kr/tkboard/woi/1243615/6meBlp16an.do?pageSeq=1909638" target="_blank" 
+                               style="background: #fd79a8; color: white; text-decoration: none; padding: 8px 12px; border-radius: 15px; font-size: 12px; font-weight: bold;">
+                                3-6반
+                            </a>
+                        </div>
                     </div>
 
                     <div style="text-align: center; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 3px solid #74b9ff;">
@@ -1076,11 +912,9 @@ ${data.reflection}
 
             // 스크롤을 위로 이동
             window.scrollTo(0, 0);
-
-            console.log('결과 정리 화면으로 전환되었습니다!');
         }
 
-        // 자동 계산 기능 (옵션)
+        // 자동 계산 기능
         function calculateHeight(angleId, distanceId, eyeHeightId, resultId) {
             const angle = parseFloat(document.getElementById(angleId).value);
             const distance = parseFloat(document.getElementById(distanceId).value);
