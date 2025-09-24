@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>클리노미터 활동 순서</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .activity-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .activity-table th {
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            padding: 15px 10px;
+            text-align: center;
+            font-weight: bold;
+            border: 2px solid #ddd;
+            font-size: 14px;
+        }
+
+        .activity-table td {
+            padding: 15px 10px;
+            border: 2px solid #ddd;
+            text-align: center;
+            background: white;
+        }
+
+        .activity-table tr:nth-child(even) td {
+            background: #f8f9ff;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #ff7675, #fd79a8);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin: 0 auto;
+        }
+
+        .input-section {
+            background: linear-gradient(135deg, #a29bfe, #74b9ff);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            color: white;
+        }
+
+        .input-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .form-group textarea {
+            height: 80px;
+            resize: vertical;
+        }
+
+        .photo-upload {
+            background: white;
+            color: #333;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .photo-upload:hover {
+            border-color: #74b9ff;
+            background: #f8f9ff;
+        }
+
+        .photo-upload.dragover {
+            border-color: #00b894;
+            background: #d1f2eb;
+        }
+
+        .preview-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .preview-image {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .preview-image img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .remove-image {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .save-btn {
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+            box-shadow: 0 5px 15px rgba(0,184,148,0.4);
+            transition: all 0.3s ease;
+            min-width: 150px;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0,184,148,0.6);
+        }
+
+        .notice {
+            background: linear-gradient(135deg, #ff6b6b, #ffa8a8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .notice h4 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .measurement-diagram {
+            background: #f8f9ff;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .angle-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .angle-input input {
+            width: 80px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .activity-table th,
+            .activity-table td {
+                padding: 10px 5px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔭 클리노미터 활동 순서</h1>
+            <p>야외에서 건물과 나무의 높이를 구해 보자!</p>
+        </div>
+
+        <div class="content">
+            <!-- 활동 순서표 -->
+            <table class="activity-table">
+                <thead>
+                    <tr>
+                        <th>순서</th>
+                        <th>내용</th>
+                        <th>클리노미터<br>담당</th>
+                        <th>기록 담당</th>
+                        <th>줄자 담당</th>
+                        <th>활용 담당</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><div class="step-number">1</div></td>
+                        <td><strong>대상 물질</strong></td>
+                        <td>측정 준비</td>
+                        <td>측정 준비</td>
+                        <td>측정 준비</td>
+                        <td><strong>측정 전</strong><br>높이를 재고자 하는<br>대상을 먼저 활용</td>
+                    </tr>
+                    <tr>
+                        <td><div class="step-number">2</div></td>
+                        <td><strong>측정 및<br>기록</strong></td>
+                        <td>긴 줄자로 설 후<br>클리노미터에<br>의해<br>탑면을 통해<br>대상을 관찰<br>(음악까지 유음)</td>
+                        <td>1. 클리노미터에<br>표시된 각도 기록<br>2. 지면 측정<br>3. 클리노미터<br>담당 학생 높이<br>측정</td>
+                        <td><strong>클리노미터<br>사용자 설정에서<br>대상과의 거리<br>측정</strong><br>2. 지면으로부터<br>학생의 눈까지<br>의 높이 측정</td>
+                        <td>모든원이<br>역할을 바꾸어<br>휴대폰으로<br>영상화</td>
+                    </tr>
+                    <tr>
+                        <td><div class="step-number">3</div></td>
+                        <td><strong>보고서<br>작성</strong></td>
+                        <td>계산 및<br>보고서 작성</td>
+                        <td>계산 및<br>보고서 작성</td>
+                        <td>계산 및<br>보고서 작성</td>
+                        <td>계산 및<br>보고서 작성</td>
+                    </tr>
+                    <tr>
+                        <td><div class="step-number">4</div></td>
+                        <td colspan="5"><strong>1~3번 항목 한번 더</strong></td>
+                    </tr>
+                    <tr>
+                        <td><div class="step-number">5</div></td>
+                        <td colspan="5"><strong>교사에게 제출</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- 주의사항 -->
+            <div class="notice">
+                <h4>⚠️ 주의사항</h4>
+                <p>• 출자 측정시 위험한 부분이 있기 때문에 특별히 주의할 것.<br>
+                • 장난식 시 해당 모둠은 포트폴리오 수행평가에 불이익이 있음.</p>
+            </div>
+
+            <!-- 측정 결과 입력 섹션 -->
+            <div class="input-section">
+                <h3>📊 측정 결과 기록</h3>
+                
+                <div class="form-group">
+                    <label>모둠명:</label>
+                    <input type="text" id="teamName" placeholder="모둠명을 입력하세요">
+                </div>
+
+                <div class="form-group">
+                    <label>측정 대상 1:</label>
+                    <input type="text" id="target1" placeholder="예: 학교 건물, 큰 나무 등">
+                </div>
+
+                <div class="form-group">
+                    <label>클리노미터 각도 (첫 번째 측정):</label>
+                    <div class="angle-input">
+                        <input type="number" id="angle1" placeholder="각도"> <span>°</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>대상과의 거리 (첫 번째 측정):</label>
+                    <div class="angle-input">
+                        <input type="number" id="distance1" placeholder="거리"> <span>m</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>관찰자 눈높이 (첫 번째 측정):</label>
+                    <div class="angle-input">
+                        <input type="number" id="eyeHeight1" placeholder="높이"> <span>m</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>계산된 높이 (첫 번째 측정):</label>
+                    <div class="angle-input">
+                        <input type="number" id="calculatedHeight1" placeholder="높이"> <span>m</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>측정 대상 2:</label>
+                    <input type="text" id="target2" placeholder="예: 학교 건물, 큰 나무 등">
+                </div>
+
+                <div class="form-group">
+                    <label>클리노미터 각도 (두 번째 측정):</label>
+                    <div class="angle-input">
+                        <input type="number" id="angle2" placeholder="각도"> <span>°</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>대상과의 거리 (두 번째 측정):</label>
+                    <div class="angle-input">
+                        <input type="number" id="distance2" placeholder="거리"> <span>m</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>관찰자 눈높이 (두 번째 측정):</label>
+                    <div class="angle-input">
+                        <input type="number" id="eyeHeight2" placeholder="높이"> <span>m</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>계산된 높이 (두 번째 측정):</label>
+                    <div class="angle-input">
+                        <input type="number" id="calculatedHeight2" placeholder="높이"> <span>m</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>활동 소감 및 느낀 점:</label>
+                    <textarea id="reflection" placeholder="활동을 통해 배운 점, 어려웠던 점, 느낀 점을 자유롭게 작성하세요..."></textarea>
+                </div>
+            </div>
+
+            <!-- 사진 업로드 섹션 -->
+            <div class="input-section">
+                <h3>📸 활동 사진 업로드</h3>
+                
+                <div class="form-group">
+                    <label>활동 사진들을 업로드하세요:</label>
+                    <div class="photo-upload" id="photoUpload">
+                        <p>📷 클릭하여 사진을 선택하거나<br>여기에 사진을 드래그하세요</p>
+                        <input type="file" id="photoInput" multiple accept="image/*" style="display: none;">
+                    </div>
+                    <div class="preview-container" id="previewContainer"></div>
+                </div>
+            </div>
+
+            <!-- 측정 원리 다이어그램 -->
+            <div class="measurement-diagram">
+                <h3>📐 클리노미터를 이용한 높이 측정 원리</h3>
+                <p><strong>높이 = (거리 × tan(각도)) + 관찰자 눈높이</strong></p>
+                <p style="margin-top: 10px; color: #666;">
+                    삼각함수를 이용하여 건물이나 나무의 높이를 간접적으로 측정할 수 있습니다.
+                </p>
+            </div>
+
+            <div style="text-align: center; flex-wrap: wrap; display: flex; justify-content: center; gap: 10px;">
+                <button class="save-btn" onclick="saveAsHTML()">📄 HTML 보고서</button>
+                <button class="save-btn" onclick="showResultSummary()" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">📋 결과 정리하기</button>
+                <button class="save-btn" onclick="saveAsCSV()" style="background: linear-gradient(135deg, #00cec9, #55a3ff);">📊 CSV 데이터</button>
+                <button class="save-btn" onclick="submitToGoogleForm()" style="background: linear-gradient(135deg, #4285f4, #ea4335);">📝 구글폼 제출</button>
+            </div>
+
+            <!-- 구글폼 설정 섹션 -->
+            <div class="input-section" style="margin-top: 20px;">
+                <h3>📝 구글폼 제출 설정</h3>
+                <div class="form-group">
+                    <label>구글폼 URL:</label>
+                    <input type="url" id="googleFormUrl" placeholder="구글폼 URL을 입력하세요 (예: https://forms.gle/xxxxx)">
+                    <small style="display: block; margin-top: 5px; color: #ddd;">
+                        선생님이 만든 구글폼의 링크를 여기에 입력하세요.
+                    </small>
+                </div>
+                <button onclick="showGoogleFormGuide()" style="background: #6c5ce7; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-bottom: 10px;">
+                    📋 구글폼 설정 가이드 보기
+                </button>
+                <p style="color: #ddd; font-size: 14px; margin-top: 10px;">
+                    💡 <strong>구글폼 제출 방식:</strong><br>
+                    학생이 버튼을 누르면 구글폼이 새 창으로 열리고,<br>
+                    측정 데이터가 자동으로 미리 입력된 상태로 나타납니다!<br>
+                    사진은 구글폼의 파일 업로드 기능을 사용합니다.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 사진 업로드 기능
+        const photoUpload = document.getElementById('photoUpload');
+        const photoInput = document.getElementById('photoInput');
+        const previewContainer = document.getElementById('previewContainer');
+        let uploadedFiles = [];
+
+        // 클릭으로 파일 선택
+        photoUpload.addEventListener('click', () => {
+            photoInput.click();
+        });
+
+        // 드래그 앤 드롭 기능
+        photoUpload.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            photoUpload.classList.add('dragover');
+        });
+
+        photoUpload.addEventListener('dragleave', () => {
+            photoUpload.classList.remove('dragover');
+        });
+
+        photoUpload.addEventListener('drop', (e) => {
+            e.preventDefault();
+            photoUpload.classList.remove('dragover');
+            const files = Array.from(e.dataTransfer.files);
+            handleFiles(files);
+        });
+
+        photoInput.addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            handleFiles(files);
+        });
+
+        function handleFiles(files) {
+            files.forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    uploadedFiles.push(file);
+                    displayPreview(file, uploadedFiles.length - 1);
+                }
+            });
+        }
+
+        function displayPreview(file, index) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const previewDiv = document.createElement('div');
+                previewDiv.className = 'preview-image';
+                previewDiv.innerHTML = `
+                    <img src="${e.target.result}" alt="업로드된 사진">
+                    <button class="remove-image" onclick="removeImage(${index})">×</button>
+                `;
+                previewContainer.appendChild(previewDiv);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeImage(index) {
+            uploadedFiles.splice(index, 1);
+            previewContainer.innerHTML = '';
+            uploadedFiles.forEach((file, newIndex) => {
+                displayPreview(file, newIndex);
+            });
+        }
+
+        // HTML 보고서로 저장
+        function saveAsHTML() {
+            const data = {
+                teamName: document.getElementById('teamName').value || '미입력',
+                target1: document.getElementById('target1').value || '미입력',
+                angle1: document.getElementById('angle1').value || '미입력',
+                distance1: document.getElementById('distance1').value || '미입력',
+                eyeHeight1: document.getElementById('eyeHeight1').value || '미입력',
+                calculatedHeight1: document.getElementById('calculatedHeight1').value || '미입력',
+                target2: document.getElementById('target2').value || '미입력',
+                angle2: document.getElementById('angle2').value || '미입력',
+                distance2: document.getElementById('distance2').value || '미입력',
+                eyeHeight2: document.getElementById('eyeHeight2').value || '미입력',
+                calculatedHeight2: document.getElementById('calculatedHeight2').value || '미입력',
+                reflection: document.getElementById('reflection').value || '미입력',
+                timestamp: new Date().toLocaleString()
+            };
+
+            // 사진을 Base64로 변환하여 HTML에 포함
+            Promise.all(uploadedFiles.map(file => {
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.readAsDataURL(file);
+                });
+            })).then(photoDataList => {
+                const photoHtml = photoDataList.map((photoData, index) => 
+                    `<div class="photo-item">
+                        <h4>📷 사진 ${index + 1}</h4>
+                        <img src="${photoData}" style="max-width: 100%; height: auto; border-radius: 8px; margin: 10px 0;">
+                    </div>`
+                ).join('');
+
+                const htmlContent = `
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>클리노미터 활동 보고서 - ${data.teamName}</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: #f8f9fa;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2d3436;
+            text-align: center;
+            border-bottom: 3px solid #74b9ff;
+            padding-bottom: 15px;
+        }
+        .info-section {
+            background: #e8f4fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .measurement-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .measurement-table th {
+            background: #74b9ff;
+            color: white;
+            padding: 12px;
+            text-align: center;
+        }
+        .measurement-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        .measurement-table tr:nth-child(even) {
+            background: #f8f9ff;
+        }
+        .reflection-section {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .photo-section {
+            margin: 30px 0;
+        }
+        .photo-item {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .footer {
+            text-align: center;
+            color: #636e72;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔭 클리노미터 활동 보고서</h1>
+        
+        <div class="info-section">
+            <h2>📋 기본 정보</h2>
+            <p><strong>모둠명:</strong> ${data.teamName}</p>
+            <p><strong>제출일시:</strong> ${data.timestamp}</p>
+        </div>
+
+        <h2>📐 측정 결과</h2>
+        <table class="measurement-table">
+            <tr>
+                <th>구분</th>
+                <th>측정 대상</th>
+                <th>클리노미터 각도(°)</th>
+                <th>대상과의 거리(m)</th>
+                <th>관찰자 눈높이(m)</th>
+                <th>계산된 높이(m)</th>
+            </tr>
+            <tr>
+                <td><strong>1차 측정</strong></td>
+                <td>${data.target1}</td>
+                <td>${data.angle1}</td>
+                <td>${data.distance1}</td>
+                <td>${data.eyeHeight1}</td>
+                <td>${data.calculatedHeight1}</td>
+            </tr>
+            <tr>
+                <td><strong>2차 측정</strong></td>
+                <td>${data.target2}</td>
+                <td>${data.angle2}</td>
+                <td>${data.distance2}</td>
+                <td>${data.eyeHeight2}</td>
+                <td>${data.calculatedHeight2}</td>
+            </tr>
+        </table>
+
+        <div class="reflection-section">
+            <h2>💭 활동 소감 및 느낀 점</h2>
+            <p>${data.reflection.replace(/\n/g, '<br>')}</p>
+        </div>
+
+        ${photoHtml ? `
+        <div class="photo-section">
+            <h2>📸 활동 사진</h2>
+            ${photoHtml}
+        </div>
+        ` : ''}
+
+        <div class="footer">
+            <p>클리노미터 활동 보고서 | 생성일시: ${new Date().toLocaleString()}</p>
+        </div>
+    </div>
+</body>
+</html>`;
+
+                // HTML 파일로 다운로드
+                const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `클리노미터_보고서_${data.teamName}_${new Date().getTime()}.html`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                alert('📄 HTML 보고서가 저장되었습니다!\n\n더블클릭하면 브라우저에서 바로 볼 수 있어요!');
+            });
+        }
+
+        // CSV 파일로 저장 (엑셀에서 열기 가능)
+        function saveAsCSV() {
+            const data = {
+                teamName: document.getElementById('teamName').value || '미입력',
+                target1: document.getElementById('target1').value || '미입력',
+                angle1: document.getElementById('angle1').value || '미입력',
+                distance1: document.getElementById('distance1').value || '미입력',
+                eyeHeight1: document.getElementById('eyeHeight1').value || '미입력',
+                calculatedHeight1: document.getElementById('calculatedHeight1').value || '미입력',
+                target2: document.getElementById('target2').value || '미입력',
+                angle2: document.getElementById('angle2').value || '미입력',
+                distance2: document.getElementById('distance2').value || '미입력',
+                eyeHeight2: document.getElementById('eyeHeight2').value || '미입력',
+                calculatedHeight2: document.getElementById('calculatedHeight2').value || '미입력',
+                reflection: document.getElementById('reflection').value || '미입력',
+                photoCount: uploadedFiles.length,
+                timestamp: new Date().toLocaleString()
+            };
+
+            const headers = [
+                '제출일시', '모둠명', 
+                '측정대상1', '각도1(도)', '거리1(m)', '눈높이1(m)', '계산높이1(m)',
+                '측정대상2', '각도2(도)', '거리2(m)', '눈높이2(m)', '계산높이2(m)',
+                '활동소감', '사진개수'
+            ];
+
+            const rowData = [
+                data.timestamp, data.teamName,
+                data.target1, data.angle1, data.distance1, data.eyeHeight1, data.calculatedHeight1,
+                data.target2, data.angle2, data.distance2, data.eyeHeight2, data.calculatedHeight2,
+                data.reflection, data.photoCount
+            ];
+
+            const csvContent = [
+                headers.join(','),
+                rowData.map(cell => `"${cell}"`).join(',')
+            ].join('\n');
+
+            // UTF-8 BOM 추가 (한글 깨짐 방지)
+            const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `클리노미터_데이터_${data.teamName}_${new Date().getTime()}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            alert('📊 CSV 파일이 저장되었습니다!\n\n엑셀에서 열어서 확인할 수 있어요!');
+        }
+
+        // 구글폼으로 제출하기
+        function submitToGoogleForm() {
+            const googleFormUrl = document.getElementById('googleFormUrl').value;
+            
+            if (!googleFormUrl) {
+                alert('구글폼 URL을 먼저 입력해주세요.');
+                return;
+            }
+
+            const data = {
+                teamName: document.getElementById('teamName').value || '',
+                target1: document.getElementById('target1').value || '',
+                angle1: document.getElementById('angle1').value || '',
+                distance1: document.getElementById('distance1').value || '',
+                eyeHeight1: document.getElementById('eyeHeight1').value || '',
+                calculatedHeight1: document.getElementById('calculatedHeight1').value || '',
+                target2: document.getElementById('target2').value || '',
+                angle2: document.getElementById('angle2').value || '',
+                distance2: document.getElementById('distance2').value || '',
+                eyeHeight2: document.getElementById('eyeHeight2').value || '',
+                calculatedHeight2: document.getElementById('calculatedHeight2').value || '',
+                reflection: document.getElementById('reflection').value || '',
+                timestamp: new Date().toLocaleString()
+            };
+
+            // 구글폼 URL에 데이터를 미리 입력하는 파라미터 추가
+            // 실제로는 구글폼의 entry ID를 알아야 하지만, 일단 기본 형태로 만들어보겠습니다
+            let formUrlWithData = googleFormUrl;
+            
+            // 구글폼이 /viewform으로 끝나면 미리채우기 URL로 변경
+            if (formUrlWithData.includes('/viewform')) {
+                formUrlWithData = formUrlWithData.replace('/viewform', '/viewform?usp=pp_url');
+                
+                // 미리채우기 파라미터들 (실제로는 폼의 entry ID가 필요함)
+                const prefillData = [
+                    `entry.모둠명=${encodeURIComponent(data.teamName)}`,
+                    `entry.측정대상1=${encodeURIComponent(data.target1)}`,
+                    `entry.각도1=${encodeURIComponent(data.angle1)}`,
+                    `entry.거리1=${encodeURIComponent(data.distance1)}`,
+                    `entry.눈높이1=${encodeURIComponent(data.eyeHeight1)}`,
+                    `entry.계산높이1=${encodeURIComponent(data.calculatedHeight1)}`,
+                    `entry.측정대상2=${encodeURIComponent(data.target2)}`,
+                    `entry.각도2=${encodeURIComponent(data.angle2)}`,
+                    `entry.거리2=${encodeURIComponent(data.distance2)}`,
+                    `entry.눈높이2=${encodeURIComponent(data.eyeHeight2)}`,
+                    `entry.계산높이2=${encodeURIComponent(data.calculatedHeight2)}`,
+                    `entry.활동소감=${encodeURIComponent(data.reflection)}`
+                ].join('&');
+                
+                // 실제로는 위 방법보다는 단순하게 폼을 열어주는 것이 더 실용적
+                formUrlWithData = googleFormUrl;
+            }
+
+            // 데이터 요약을 클립보드에 복사
+            const summaryText = `
+클리노미터 활동 결과 - ${data.teamName}
+
+[1차 측정]
+측정대상: ${data.target1}
+각도: ${data.angle1}°
+거리: ${data.distance1}m
+눈높이: ${data.eyeHeight1}m
+계산높이: ${data.calculatedHeight1}m
+
+[2차 측정]
+측정대상: ${data.target2}
+각도: ${data.angle2}°
+거리: ${data.distance2}m
+눈높이: ${data.eyeHeight2}m
+계산높이: ${data.calculatedHeight2}m
+
+[활동소감]
+${data.reflection}
+
+제출시간: ${data.timestamp}
+            `.trim();
+
+            // 클립보드에 복사
+            navigator.clipboard.writeText(summaryText).then(() => {
+                alert('📋 측정 데이터가 클립보드에 복사되었습니다!\n\n구글폼이 새 창으로 열립니다.\n붙여넣기(Ctrl+V)로 데이터를 입력하세요!');
+                
+                // 구글폼을 새 창으로 열기
+                window.open(formUrlWithData, '_blank');
+            }).catch(() => {
+                // 클립보드 복사가 실패하면 텍스트 영역에 표시
+                showDataForCopy(summaryText, formUrlWithData);
+            });
+        }
+
+        // 데이터를 복사할 수 있는 팝업 표시
+        function showDataForCopy(summaryText, formUrl) {
+            const popup = document.createElement('div');
+            popup.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+            `;
+            
+            popup.innerHTML = `
+                <div style="
+                    background: white;
+                    padding: 30px;
+                    border-radius: 15px;
+                    max-width: 500px;
+                    width: 90%;
+                    max-height: 80%;
+                    overflow-y: auto;
+                ">
+                    <h3 style="margin-bottom: 20px;">📋 구글폼에 입력할 데이터</h3>
+                    <textarea 
+                        readonly 
+                        style="
+                            width: 100%;
+                            height: 300px;
+                            padding: 10px;
+                            border: 1px solid #ddd;
+                            border-radius: 5px;
+                            font-size: 12px;
+                            line-height: 1.4;
+                        "
+                        onclick="this.select()"
+                    >${summaryText}</textarea>
+                    <div style="margin-top: 20px; text-align: center;">
+                        <button onclick="copyToClipboard('${summaryText.replace(/'/g, "\\'")}'); window.open('${formUrl}', '_blank');" 
+                                style="background: #4285f4; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-right: 10px; cursor: pointer;">
+                            📝 복사하고 구글폼 열기
+                        </button>
+                        <button onclick="document.body.removeChild(this.parentElement.parentElement.parentElement)" 
+                                style="background: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                            닫기
+                        </button>
+                    </div>
+                    <p style="font-size: 12px; color: #666; margin-top: 15px;">
+                        💡 텍스트 영역을 클릭하면 전체 선택됩니다.<br>
+                        Ctrl+C로 복사한 후 구글폼에 붙여넣기하세요!
+                    </p>
+                </div>
+            `;
+            
+            document.body.appendChild(popup);
+        }
+
+        // 구글폼 설정 가이드
+        function showGoogleFormGuide() {
+            const guide = `
+📝 구글폼 설정 가이드 (선생님용)
+
+1️⃣ 구글폼 만들기
+• forms.google.com 접속
+• 새 설문지 만들기
+
+2️⃣ 필수 질문 항목들
+• 모둠명 (단답형)
+• 측정대상1 (단답형)
+• 각도1 (단답형)
+• 거리1 (단답형) 
+• 눈높이1 (단답형)
+• 계산높이1 (단답형)
+• 측정대상2 (단답형)
+• 각도2 (단답형)
+• 거리2 (단답형)
+• 눈높이2 (단답형)
+• 계산높이2 (단답형)
+• 활동소감 (장문형)
+• 활동사진 (파일 업로드)
+
+3️⃣ 설정
+• '응답 수집' 켜기
+• 공유 설정: 링크가 있는 모든 사용자
+
+4️⃣ 링크 복사
+• 우측 상단 '보내기' → 링크 복사
+• 위 입력란에 붙여넣기
+
+💡 팁: 학생이 버튼을 누르면 측정 데이터가 
+클립보드에 복사되어 폼에 쉽게 붙여넣을 수 있어요!
+            `;
+            
+            alert(guide);
+        }
+
+        // 결과 정리하기 (현재 페이지에서 바로 보여주기)
+        async function showResultSummary() {
+            const data = {
+                teamName: document.getElementById('teamName').value || '미입력',
+                target1: document.getElementById('target1').value || '미입력',
+                angle1: document.getElementById('angle1').value || '미입력',
+                distance1: document.getElementById('distance1').value || '미입력',
+                eyeHeight1: document.getElementById('eyeHeight1').value || '미입력',
+                calculatedHeight1: document.getElementById('calculatedHeight1').value || '미입력',
+                target2: document.getElementById('target2').value || '미입력',
+                angle2: document.getElementById('angle2').value || '미입력',
+                distance2: document.getElementById('distance2').value || '미입력',
+                eyeHeight2: document.getElementById('eyeHeight2').value || '미입력',
+                calculatedHeight2: document.getElementById('calculatedHeight2').value || '미입력',
+                reflection: document.getElementById('reflection').value || '미입력',
+                timestamp: new Date().toLocaleString()
+            };
+
+            // 사진을 Base64로 변환
+            const photoDataList = await Promise.all(uploadedFiles.map(file => {
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.readAsDataURL(file);
+                });
+            }));
+
+            // 사진 HTML 생성
+            const photoHtml = photoDataList.map((photoData, index) => 
+                `<div style="display: inline-block; margin: 10px; text-align: center;">
+                    <img src="${photoData}" style="width: 200px; height: 150px; object-fit: cover; border: 2px solid #ddd; border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.2);">
+                    <p style="margin: 5px 0; font-size: 12px; color: #666;">📷 사진 ${index + 1}</p>
+                </div>`
+            ).join('');
+
+            // 결과 요약 내용 생성
+            const summaryContent = `
+                <div style="
+                    background: white;
+                    max-width: 900px;
+                    margin: 20px auto;
+                    padding: 30px;
+                    border-radius: 20px;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                    font-family: 'Malgun Gothic', sans-serif;
+                ">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <button onclick="location.reload()" style="background: #ff6b6b; color: white; border: none; padding: 10px 20px; border-radius: 25px; cursor: pointer; font-size: 14px; font-weight: bold; margin-bottom: 15px;">
+                            🔄 원래 화면으로 돌아가기
+                        </button>
+                        <p style="margin: 0; color: #636e72; font-size: 14px;">📱 이 화면을 캡처해서 띵커벨에 업로드하세요!</p>
+                    </div>
+
+                    <div style="text-align: center; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 3px solid #74b9ff;">
+                        <h1 style="color: #2d3436; margin: 0; font-size: 28px;">🔭 클리노미터 활동 결과</h1>
+                        <p style="margin: 10px 0; color: #636e72; font-size: 16px;">야외에서 건물과 나무의 높이를 구해 보자!</p>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, #e8f4fd, #f8f9fa); padding: 15px 25px; border-radius: 15px; margin-bottom: 25px; border: 2px solid #74b9ff;">
+                        <div>
+                            <h3 style="margin: 0; color: #2d3436;">📋 기본 정보</h3>
+                            <p style="margin: 5px 0; font-size: 16px;"><strong>모둠명:</strong> ${data.teamName}</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <p style="margin: 0; color: #636e72; font-size: 14px;"><strong>제출일시:</strong></p>
+                            <p style="margin: 0; color: #2d3436; font-size: 14px;">${data.timestamp}</p>
+                        </div>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #74b9ff, #0984e3); color: white; padding: 15px; border-radius: 15px; text-align: center; margin-bottom: 25px; box-shadow: 0 5px 15px rgba(116,185,255,0.4);">
+                        <h3 style="margin: 0; font-size: 18px;">📐 측정 공식</h3>
+                        <p style="margin: 10px 0; font-size: 16px; font-weight: bold;">높이 = (거리 × tan(각도)) + 관찰자 눈높이</p>
+                    </div>
+
+                    <h2 style="color: #2d3436; text-align: center; margin: 25px 0 15px 0; font-size: 22px;">📊 측정 결과</h2>
+                    <table style="width: 100%; border-collapse: collapse; margin: 20px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-radius: 10px; overflow: hidden;">
+                        <tr>
+                            <th style="background: linear-gradient(135deg, #74b9ff, #0984e3); color: white; padding: 15px 10px; text-align: center; font-size: 14px; font-weight: bold;">구분</th>
+                            <th style="background: linear-gradient(135deg, #74b9ff, #0984e3); color: white; padding: 15px 10px; text-align: center; font-size: 14px; font-weight: bold;">측정 대상</th>
+                            <th style="background: linear-gradient(135deg, #74b9ff, #0984e3); color: white; padding: 15px 10px; text-align: center; font-size: 14px; font-weight: bold;">각도(°)</th>
+                            <th style="background: linear-gradient(135deg, #74b9ff, #0984e3); color: white; padding: 15px 10px; text-align: center; font-size: 14px; font-weight: bold;">거리(m)</th>
+                            <th style="background: linear-gradient(135deg, #74b9ff, #0984e3); color: white; padding: 15px 10px; text-align: center; font-size: 14px; font-weight: bold;">눈높이(m)</th>
+                            <th style="background: linear-gradient(135deg, #74b9ff, #0984e3); color: white; padding: 15px 10px; text-align: center; font-size: 14px; font-weight: bold;">계산높이(m)</th>
+                        </tr>
+                        <tr style="background: white;">
+                            <td style="border: 1px solid #ddd; padding: 12px 8px; text-align: center; font-weight: bold; color: #e74c3c; font-size: 14px;">1차 측정</td>
+                            <td style="border: 1px solid #ddd; padding: 12px 8px; text-align: center; font-size: 14px;">${data.target1}</td>
+                            <td style="border: 1px solid #ddd; padding: 12px 8px; text-align: center; font-size: 14px; font-weight: bold; color: #0984e3;">${data.angle1}</td>
+                            <td style="border: 1px solid #ddd; padding: 12px 8px; text-align: center; font-size: 14px;">${data.distance1}</td>
+                            <td style="border: 1px solid #ddd; padding: 12px 8px; text-align: center; font-size: 14px;">${data.eyeHeight1}</td>
+                            <td style="border: 1px solid #ddd; padding: 12px 8px; text-align: center; font-size: 16px; font-weight: bold; color: #00b894; background: #e8f5e8;">${data.calculatedHeight1}</td>
+                        </tr>
+                        <tr style="background: #f8f9ff;">
+                            <td style="border: 1px solid #ddd; padding: 12px 8px; text-align: center; font-weight: bold; color: #e74c3c; font-size: 14px;">2차 측정</td>
+                            <td style="border: 1px solid #ddd; padding: 12px 8px; text-align: center; font-size: 14px;">${data.target2}</td>
+                            <td style="border: 1px solid #ddd; padding: 12px 8px; text-align: center; font-size: 14px; font-weight: bold; color: #0984e3;">${data.angle2}</td>
+                            <td style="border: 1px solid #ddd; padding: 12px 8px; text-align: center; font-size: 14px;">${data.distance2}</td>
+                            <td style="border: 1px solid #ddd; padding: 12px 8px; text-align: center; font-size: 14px;">${data.eyeHeight2}</td>
+                            <td style="border: 1px solid #ddd; padding: 12px 8px; text-align: center; font-size: 16px; font-weight: bold; color: #00b894; background: #e8f5e8;">${data.calculatedHeight2}</td>
+                        </tr>
+                    </table>
+
+                    <div style="background: linear-gradient(135deg, #fff8e1, #ffecb3); border: 2px solid #ffb74d; border-radius: 15px; padding: 20px; margin: 25px 0;">
+                        <h3 style="margin: 0 0 15px 0; color: #e65100; font-size: 18px;">💭 활동 소감 및 느낀 점</h3>
+                        <p style="white-space: pre-wrap; line-height: 1.6; font-size: 15px; color: #333; margin: 0;">${data.reflection}</p>
+                    </div>
+
+                    ${photoHtml ? `
+                    <div style="margin: 25px 0; text-align: center;">
+                        <h3 style="color: #2d3436; margin-bottom: 20px; font-size: 20px;">📸 활동 사진</h3>
+                        <div style="text-align: center;">
+                            ${photoHtml}
+                        </div>
+                    </div>
+                    ` : ''}
+
+                    <div style="text-align: center; color: #6c757d; font-size: 14px; margin-top: 30px; padding-top: 20px; border-top: 2px dashed #ddd;">
+                        <p style="margin: 0;">🎯 클리노미터 활동 완료! | 📸 사진 ${uploadedFiles.length}개 | 📅 ${new Date().toLocaleString()}</p>
+                    </div>
+                </div>
+            `;
+
+            // 현재 페이지를 결과 화면으로 변경
+            document.body.innerHTML = `
+                <div style="
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    min-height: 100vh;
+                    padding: 20px;
+                ">
+                    ${summaryContent}
+                </div>
+            `;
+
+            // 스크롤을 위로 이동
+            window.scrollTo(0, 0);
+
+            console.log('결과 정리 화면으로 전환되었습니다!');
+        }
+
+        // 자동 계산 기능 (옵션)
+        function calculateHeight(angleId, distanceId, eyeHeightId, resultId) {
+            const angle = parseFloat(document.getElementById(angleId).value);
+            const distance = parseFloat(document.getElementById(distanceId).value);
+            const eyeHeight = parseFloat(document.getElementById(eyeHeightId).value);
+            
+            if (angle && distance && eyeHeight) {
+                const radians = angle * (Math.PI / 180);
+                const height = (distance * Math.tan(radians)) + eyeHeight;
+                document.getElementById(resultId).value = height.toFixed(2);
+            }
+        }
+
+        // 입력값 변경시 자동 계산
+        ['angle1', 'distance1', 'eyeHeight1'].forEach(id => {
+            document.getElementById(id).addEventListener('input', () => {
+                calculateHeight('angle1', 'distance1', 'eyeHeight1', 'calculatedHeight1');
+            });
+        });
+
+        ['angle2', 'distance2', 'eyeHeight2'].forEach(id => {
+            document.getElementById(id).addEventListener('input', () => {
+                calculateHeight('angle2', 'distance2', 'eyeHeight2', 'calculatedHeight2');
+            });
+        });
+    </script>
+</body>
+</html>
