@@ -372,74 +372,51 @@
                 </div>
 
                 <div class="form-group">
-                    <label>측정 대상 1:</label>
+                    <label>측정 대상:</label>
                     <input type="text" id="target1" placeholder="예: 학교 건물, 큰 나무 등">
                 </div>
 
                 <div class="form-group">
-                    <label>클리노미터 각도 (첫 번째 측정):</label>
+                    <label>클리노미터 각도:</label>
                     <div class="angle-input">
-                        <input type="number" id="angle1" placeholder="각도"> <span>°</span>
+                        <input type="number" id="angle1" placeholder="각도" min="0" max="90"> <span>°</span>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>대상과의 거리 (첫 번째 측정):</label>
+                    <label>대상과의 거리:</label>
                     <div class="angle-input">
-                        <input type="number" id="distance1" placeholder="거리"> <span>m</span>
+                        <input type="number" id="distance1" placeholder="거리" min="0"> <span>m</span>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>관찰자 눈높이 (첫 번째 측정):</label>
+                    <label>관찰자 눈높이:</label>
                     <div class="angle-input">
-                        <input type="number" id="eyeHeight1" placeholder="높이"> <span>m</span>
+                        <input type="number" id="eyeHeight1" placeholder="높이" min="0"> <span>m</span>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>계산된 높이 (첫 번째 측정):</label>
+                    <label>계산된 높이:</label>
                     <div class="angle-input">
-                        <input type="number" id="calculatedHeight1" placeholder="높이"> <span>m</span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>측정 대상 2:</label>
-                    <input type="text" id="target2" placeholder="예: 학교 건물, 큰 나무 등">
-                </div>
-
-                <div class="form-group">
-                    <label>클리노미터 각도 (두 번째 측정):</label>
-                    <div class="angle-input">
-                        <input type="number" id="angle2" placeholder="각도"> <span>°</span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>대상과의 거리 (두 번째 측정):</label>
-                    <div class="angle-input">
-                        <input type="number" id="distance2" placeholder="거리"> <span>m</span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>관찰자 눈높이 (두 번째 측정):</label>
-                    <div class="angle-input">
-                        <input type="number" id="eyeHeight2" placeholder="높이"> <span>m</span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>계산된 높이 (두 번째 측정):</label>
-                    <div class="angle-input">
-                        <input type="number" id="calculatedHeight2" placeholder="높이"> <span>m</span>
+                        <input type="number" id="calculatedHeight1" placeholder="자동 계산됨" readonly style="background: #e8f5e8;"> <span>m</span>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>활동 소감 및 느낀 점:</label>
                     <textarea id="reflection" placeholder="활동을 통해 배운 점, 어려웠던 점, 느낀 점을 자유롭게 작성하세요..."></textarea>
+                </div>
+            </div>
+
+            <!-- 측정 시각화 -->
+            <div class="measurement-diagram" id="visualizationSection" style="display: none;">
+                <h3>📐 측정 상황 시각화</h3>
+                <canvas id="measurementCanvas" width="400" height="300" style="border: 1px solid #ddd; border-radius: 10px; background: white;"></canvas>
+                <div id="calculationDetails" style="margin-top: 15px; padding: 15px; background: #f0f8ff; border-radius: 10px;">
+                    <h4 style="margin: 0 0 10px 0; color: #2d3436;">🧮 계산 과정</h4>
+                    <p id="calculationSteps" style="margin: 0; line-height: 1.8;"></p>
                 </div>
             </div>
 
@@ -690,7 +667,6 @@
         <h2>📐 측정 결과</h2>
         <table class="measurement-table">
             <tr>
-                <th>구분</th>
                 <th>측정 대상</th>
                 <th>클리노미터 각도(°)</th>
                 <th>대상과의 거리(m)</th>
@@ -698,20 +674,11 @@
                 <th>계산된 높이(m)</th>
             </tr>
             <tr>
-                <td><strong>1차 측정</strong></td>
                 <td>${data.target1}</td>
                 <td>${data.angle1}</td>
                 <td>${data.distance1}</td>
                 <td>${data.eyeHeight1}</td>
                 <td>${data.calculatedHeight1}</td>
-            </tr>
-            <tr>
-                <td><strong>2차 측정</strong></td>
-                <td>${data.target2}</td>
-                <td>${data.angle2}</td>
-                <td>${data.distance2}</td>
-                <td>${data.eyeHeight2}</td>
-                <td>${data.calculatedHeight2}</td>
             </tr>
         </table>
 
@@ -758,11 +725,6 @@
                 distance1: document.getElementById('distance1').value || '미입력',
                 eyeHeight1: document.getElementById('eyeHeight1').value || '미입력',
                 calculatedHeight1: document.getElementById('calculatedHeight1').value || '미입력',
-                target2: document.getElementById('target2').value || '미입력',
-                angle2: document.getElementById('angle2').value || '미입력',
-                distance2: document.getElementById('distance2').value || '미입력',
-                eyeHeight2: document.getElementById('eyeHeight2').value || '미입력',
-                calculatedHeight2: document.getElementById('calculatedHeight2').value || '미입력',
                 reflection: document.getElementById('reflection').value || '미입력',
                 timestamp: new Date().toLocaleString()
             };
@@ -854,7 +816,6 @@
                     <h2 style="color: #2d3436; text-align: center; margin: 25px 0 15px 0; font-size: 22px;">📊 측정 결과</h2>
                     <table style="width: 100%; border-collapse: collapse; margin: 20px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-radius: 10px; overflow: hidden;">
                         <tr>
-                            <th style="background: linear-gradient(135deg, #74b9ff, #0984e3); color: white; padding: 15px 10px; text-align: center; font-size: 14px; font-weight: bold;">구분</th>
                             <th style="background: linear-gradient(135deg, #74b9ff, #0984e3); color: white; padding: 15px 10px; text-align: center; font-size: 14px; font-weight: bold;">측정 대상</th>
                             <th style="background: linear-gradient(135deg, #74b9ff, #0984e3); color: white; padding: 15px 10px; text-align: center; font-size: 14px; font-weight: bold;">각도(°)</th>
                             <th style="background: linear-gradient(135deg, #74b9ff, #0984e3); color: white; padding: 15px 10px; text-align: center; font-size: 14px; font-weight: bold;">거리(m)</th>
@@ -862,24 +823,13 @@
                             <th style="background: linear-gradient(135deg, #74b9ff, #0984e3); color: white; padding: 15px 10px; text-align: center; font-size: 14px; font-weight: bold;">계산높이(m)</th>
                         </tr>
                         <tr style="background: white;">
-                            <td style="border: 1px solid #ddd; padding: 12px 8px; text-align: center; font-weight: bold; color: #e74c3c; font-size: 14px;">1차 측정</td>
                             <td style="border: 1px solid #ddd; padding: 12px 8px; text-align: center; font-size: 14px;">${data.target1}</td>
                             <td style="border: 1px solid #ddd; padding: 12px 8px; text-align: center; font-size: 14px; font-weight: bold; color: #0984e3;">${data.angle1}</td>
                             <td style="border: 1px solid #ddd; padding: 12px 8px; text-align: center; font-size: 14px;">${data.distance1}</td>
                             <td style="border: 1px solid #ddd; padding: 12px 8px; text-align: center; font-size: 14px;">${data.eyeHeight1}</td>
                             <td style="border: 1px solid #ddd; padding: 12px 8px; text-align: center; font-size: 16px; font-weight: bold; color: #00b894; background: #e8f5e8;">${data.calculatedHeight1}</td>
                         </tr>
-                        <tr style="background: #f8f9ff;">
-                            <td style="border: 1px solid #ddd; padding: 12px 8px; text-align: center; font-weight: bold; color: #e74c3c; font-size: 14px;">2차 측정</td>
-                            <td style="border: 1px solid #ddd; padding: 12px 8px; text-align: center; font-size: 14px;">${data.target2}</td>
-                            <td style="border: 1px solid #ddd; padding: 12px 8px; text-align: center; font-size: 14px; font-weight: bold; color: #0984e3;">${data.angle2}</td>
-                            <td style="border: 1px solid #ddd; padding: 12px 8px; text-align: center; font-size: 14px;">${data.distance2}</td>
-                            <td style="border: 1px solid #ddd; padding: 12px 8px; text-align: center; font-size: 14px;">${data.eyeHeight2}</td>
-                            <td style="border: 1px solid #ddd; padding: 12px 8px; text-align: center; font-size: 16px; font-weight: bold; color: #00b894; background: #e8f5e8;">${data.calculatedHeight2}</td>
-                        </tr>
-                    </table>
-
-                    <div style="background: linear-gradient(135deg, #fff8e1, #ffecb3); border: 2px solid #ffb74d; border-radius: 15px; padding: 20px; margin: 25px 0;">
+                    </table>                     <div style="background: linear-gradient(135deg, #fff8e1, #ffecb3); border: 2px solid #ffb74d; border-radius: 15px; padding: 20px; margin: 25px 0;">
                         <h3 style="margin: 0 0 15px 0; color: #e65100; font-size: 18px;">💭 활동 소감 및 느낀 점</h3>
                         <p style="white-space: pre-wrap; line-height: 1.6; font-size: 15px; color: #333; margin: 0;">${data.reflection}</p>
                     </div>
@@ -914,7 +864,7 @@
             window.scrollTo(0, 0);
         }
 
-        // 자동 계산 기능
+        // 자동 계산 및 시각화 기능
         function calculateHeight(angleId, distanceId, eyeHeightId, resultId) {
             const angle = parseFloat(document.getElementById(angleId).value);
             const distance = parseFloat(document.getElementById(distanceId).value);
@@ -924,19 +874,222 @@
                 const radians = angle * (Math.PI / 180);
                 const height = (distance * Math.tan(radians)) + eyeHeight;
                 document.getElementById(resultId).value = height.toFixed(2);
+                
+                // 시각화 업데이트
+                updateVisualization(angle, distance, eyeHeight, height);
+            } else {
+                // 값이 없으면 시각화 숨기기
+                document.getElementById('visualizationSection').style.display = 'none';
             }
         }
 
-        // 입력값 변경시 자동 계산
+        // 시각화 함수 (개선된 버전)
+        function updateVisualization(angle, distance, eyeHeight, totalHeight) {
+            const canvas = document.getElementById('measurementCanvas');
+            const ctx = canvas.getContext('2d');
+            const section = document.getElementById('visualizationSection');
+            
+            // 섹션 표시
+            section.style.display = 'block';
+            
+            // 캔버스 초기화
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 캔버스 크기
+            const canvasWidth = canvas.width;
+            const canvasHeight = canvas.height;
+            
+            // 여백 설정
+            const margin = 60;
+            const drawWidth = canvasWidth - 2 * margin;
+            const drawHeight = canvasHeight - 2 * margin;
+            
+            // 실제 측정값들
+            const calculatedHeight = totalHeight - eyeHeight; // 삼각함수로 계산된 부분
+            
+            // 스케일 계산 (그림이 캔버스에 잘 맞도록)
+            const maxHorizontal = distance;
+            const maxVertical = Math.max(totalHeight, eyeHeight + calculatedHeight);
+            
+            const scaleX = drawWidth / (maxHorizontal * 1.2);
+            const scaleY = drawHeight / (maxVertical * 1.2);
+            const scale = Math.min(scaleX, scaleY);
+            
+            // 기준점 (관찰자 위치)
+            const observerX = margin;
+            const baseY = canvasHeight - margin;
+            const observerEyeY = baseY - (eyeHeight * scale);
+            
+            // 건물 위치
+            const buildingX = observerX + (distance * scale);
+            const buildingTopY = baseY - (totalHeight * scale);
+            
+            // 색상과 선 굵기 설정
+            ctx.lineWidth = 2;
+            
+            // 1. 지면 그리기 (검은색)
+            ctx.strokeStyle = '#2d3436';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(margin - 20, baseY);
+            ctx.lineTo(buildingX + 40, baseY);
+            ctx.stroke();
+            
+            // 지면 표시 (작은 세로선들)
+            for (let i = 0; i < 5; i++) {
+                ctx.beginPath();
+                ctx.moveTo(margin - 20 + i * 15, baseY);
+                ctx.lineTo(margin - 20 + i * 15, baseY + 8);
+                ctx.stroke();
+            }
+            
+            // 2. 건물/나무 그리기 (초록색)
+            ctx.strokeStyle = '#00b894';
+            ctx.lineWidth = 6;
+            ctx.beginPath();
+            ctx.moveTo(buildingX, baseY);
+            ctx.lineTo(buildingX, buildingTopY);
+            ctx.stroke();
+            
+            // 3. 관찰자 눈높이 표시 (세로선으로 수정)
+            ctx.strokeStyle = '#74b9ff';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(observerX, baseY);  // 지면에서 시작
+            ctx.lineTo(observerX, observerEyeY);  // 눈높이까지 세로선
+            ctx.stroke();
+            
+            // 관찰자 표시 (작은 원)
+            ctx.fillStyle = '#74b9ff';
+            ctx.beginPath();
+            ctx.arc(observerX, observerEyeY, 4, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // 4. 직각삼각형 그리기
+            // - 밑변: 관찰자에서 건물까지의 수평거리
+            // - 높이: 눈높이에서 건물 꼭대기까지의 수직거리
+            // - 빗변: 시선 (각도선)
+            
+            // 삼각형의 세 점
+            const trianglePoints = {
+                observer: { x: observerX, y: observerEyeY },
+                buildingBase: { x: buildingX, y: observerEyeY }, // 눈높이와 같은 수준의 건물 지점
+                buildingTop: { x: buildingX, y: buildingTopY }
+            };
+            
+            // 삼각형 밑변 (수평선 - 회색 점선)
+            ctx.strokeStyle = '#636e72';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(trianglePoints.observer.x, trianglePoints.observer.y);
+            ctx.lineTo(trianglePoints.buildingBase.x, trianglePoints.buildingBase.y);
+            ctx.stroke();
+            
+            // 삼각형 높이 (수직선 - 보라색 점선)
+            ctx.strokeStyle = '#a29bfe';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([3, 3]);
+            ctx.beginPath();
+            ctx.moveTo(trianglePoints.buildingBase.x, trianglePoints.buildingBase.y);
+            ctx.lineTo(trianglePoints.buildingTop.x, trianglePoints.buildingTop.y);
+            ctx.stroke();
+            
+            // 삼각형 빗변 (시선 - 빨간색)
+            ctx.strokeStyle = '#e74c3c';
+            ctx.lineWidth = 3;
+            ctx.setLineDash([]);
+            ctx.beginPath();
+            ctx.moveTo(trianglePoints.observer.x, trianglePoints.observer.y);
+            ctx.lineTo(trianglePoints.buildingTop.x, trianglePoints.buildingTop.y);
+            ctx.stroke();
+            
+            // 5. 직각 표시
+            const rightAngleSize = 15;
+            ctx.strokeStyle = '#636e72';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([]);
+            ctx.beginPath();
+            ctx.moveTo(buildingX - rightAngleSize, observerEyeY);
+            ctx.lineTo(buildingX - rightAngleSize, observerEyeY - rightAngleSize);
+            ctx.lineTo(buildingX, observerEyeY - rightAngleSize);
+            ctx.stroke();
+            
+            // 6. 각도 호 그리기
+            ctx.strokeStyle = '#fdcb6e';
+            ctx.lineWidth = 2;
+            const angleRad = angle * (Math.PI / 180);
+            const arcRadius = 40;
+            ctx.beginPath();
+            ctx.arc(observerX, observerEyeY, arcRadius, -angleRad, 0);
+            ctx.stroke();
+            
+            // 7. 치수 및 라벨 추가
+            ctx.fillStyle = '#2d3436';
+            ctx.font = 'bold 12px Arial';
+            ctx.textAlign = 'center';
+            
+            // 거리 라벨
+            ctx.fillText(`${distance}m`, observerX + (distance * scale) / 2, baseY + 25);
+            
+            // 각도 라벨
+            ctx.fillText(`${angle}°`, observerX + 50, observerEyeY - 15);
+            
+            // 건물 전체 높이 라벨
+            ctx.save();
+            ctx.translate(buildingX + 25, baseY - (totalHeight * scale) / 2);
+            ctx.rotate(-Math.PI/2);
+            ctx.fillStyle = '#00b894';
+            ctx.fillText(`전체: ${totalHeight.toFixed(2)}m`, 0, 0);
+            ctx.restore();
+            
+            // 눈높이 라벨
+            ctx.save();
+            ctx.translate(observerX - 30, baseY - (eyeHeight * scale) / 2);
+            ctx.rotate(-Math.PI/2);
+            ctx.fillStyle = '#74b9ff';
+            ctx.fillText(`눈높이: ${eyeHeight}m`, 0, 0);
+            ctx.restore();
+            
+            // 계산된 높이 라벨
+            ctx.save();
+            ctx.translate(buildingX - 25, observerEyeY - (calculatedHeight * scale) / 2);
+            ctx.rotate(-Math.PI/2);
+            ctx.fillStyle = '#a29bfe';
+            ctx.fillText(`계산: ${calculatedHeight.toFixed(2)}m`, 0, 0);
+            ctx.restore();
+            
+            // 8. 범례
+            ctx.fillStyle = '#636e72';
+            ctx.font = '11px Arial';
+            ctx.textAlign = 'left';
+            const legendX = canvasWidth - 140;
+            ctx.fillText('🟢 건물/나무', legendX, 25);
+            ctx.fillText('🔵 관찰자 눈높이', legendX, 40);
+            ctx.fillText('🔴 시선 (빗변)', legendX, 55);
+            ctx.fillText('🟣 계산된 높이', legendX, 70);
+            ctx.fillText('⬜ 직각삼각형', legendX, 85);
+            
+            // 계산 과정 표시
+            updateCalculationSteps(angle, distance, eyeHeight, totalHeight);
+        }
+
+        // 계산 과정 표시
+        function updateCalculationSteps(angle, distance, eyeHeight, totalHeight) {
+            const steps = document.getElementById('calculationSteps');
+            const calculatedPart = totalHeight - eyeHeight;
+            
+            steps.innerHTML = `
+                <strong>1단계:</strong> tan(${angle}°) = ${Math.tan(angle * Math.PI / 180).toFixed(4)}<br>
+                <strong>2단계:</strong> 삼각함수 높이 = ${distance}m × ${Math.tan(angle * Math.PI / 180).toFixed(4)} = ${calculatedPart.toFixed(2)}m<br>
+                <strong>3단계:</strong> 전체 높이 = ${calculatedPart.toFixed(2)}m + ${eyeHeight}m = <strong>${totalHeight.toFixed(2)}m</strong>
+            `;
+        }
+
+        // 입력값 변경시 자동 계산 및 시각화
         ['angle1', 'distance1', 'eyeHeight1'].forEach(id => {
             document.getElementById(id).addEventListener('input', () => {
                 calculateHeight('angle1', 'distance1', 'eyeHeight1', 'calculatedHeight1');
-            });
-        });
-
-        ['angle2', 'distance2', 'eyeHeight2'].forEach(id => {
-            document.getElementById(id).addEventListener('input', () => {
-                calculateHeight('angle2', 'distance2', 'eyeHeight2', 'calculatedHeight2');
             });
         });
     </script>
